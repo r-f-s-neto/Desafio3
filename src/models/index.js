@@ -1,23 +1,31 @@
-import Atendimento from "./atendimentos/atendimentosMode.js";
-import Paciente from "./pacientes/pacientesModel.js";
-import Psicologo from "./psicologos/psicologosModel.js";
+import pacientes from './pacientes.js';
+import psicologos from './psicologos.js';
+import atendimentos from './atendimentos.js';
 
-Psicologo.hasMany(Atendimento);
-Paciente.hasMany(Atendimento);
-
-Atendimento.belongsTo(Psicologo, {
-  onDelete: "CASCADE",
-  foreignKey: {
-    name: "psicologo_id",
-    allowNull: false,
-  },
+atendimentos.belongsTo(pacientes, {
+  onDelete: 'CASCADE',
+  foreignKey: 'pacientes_id',
 });
-Atendimento.belongsTo(Paciente, {
-  onDelete: "CASCADE",
-  foreignKey: {
-    name: "paciente_id",
-    allowNull: false,
-  },
+pacientes.hasMany(atendimentos, {
+  foreignKey: 'pacientes_id',
 });
 
-export { Psicologo, Paciente, Atendimento };
+atendimentos.belongsTo(psicologos, {
+  onDelete: 'CASCADE',
+  foreignKey: 'psicologos_id',
+});
+psicologos.hasMany(atendimentos, {
+  foreignKey: 'psicologos_id',
+});
+
+//pacientes.belongsToMany(psicologos, {
+//foreignKey: 'pacientes_id',
+//through: atendimentos,
+//});
+
+//psicologos.belongsToMany(pacientes, {
+// foreignKey: 'psicologos_id',
+// through: atendimentos,
+//});
+
+export { pacientes, psicologos, atendimentos };

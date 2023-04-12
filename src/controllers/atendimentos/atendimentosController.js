@@ -1,1 +1,0 @@
-import { Atendimento as AtendimentoRepository } from "../../models/index.js"
