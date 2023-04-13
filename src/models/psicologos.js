@@ -17,13 +17,13 @@ const psicologos = db.define(
     email: {
       type: DataTypes.STRING(45),
       allowNull: false,
-      unique: true,
+      unique: 'email',
     },
-    telefone: {
-      type: DataTypes.STRING(22),
+    senha: {
+      type: DataTypes.STRING(100),
       allowNull: false,
     },
-    crp: {
+    apresentacao: {
       type: DataTypes.STRING(45),
       allowNull: false,
     },

@@ -17,14 +17,10 @@ const pacientes = db.define(
     email: {
       type: DataTypes.STRING(45),
       allowNull: false,
-      unique: true,
+      unique: 'email',
     },
-    telefone: {
-      type: DataTypes.STRING(22),
-      allowNull: false,
-    },
-    data_de_nascimento: {
-      type: DataTypes.DATE,
+    idade: {
+      type: DataTypes.DATEONLY,
       allowNull: false,
     },
     createdAt: {

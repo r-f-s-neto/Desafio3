@@ -24,10 +24,6 @@ const atendimentos = db.define(
       type: DataTypes.DATE,
       allowNull: false,
     },
-    hora: {
-      type: DataTypes.TIME,
-      allowNull: false,
-    },
     id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
