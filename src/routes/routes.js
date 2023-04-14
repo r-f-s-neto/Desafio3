@@ -2,6 +2,8 @@ import { Router } from 'express';
 import pacientesController from '../controllers/pacientesController.js';
 import psicologosController from '../controllers/psicologosController.js';
 import atendimentosController from '../controllers/atendimentosController.js';
+import authController from '../controllers/authController.js';
+import auth from '../middlewares/auth.js';
 
 const routes = Router();
 
@@ -18,5 +20,7 @@ routes.post('/psicologos', psicologosController.createPsicologos);
 routes.post('/pacientes', pacientesController.createPacientes);
 routes.put('/psicologos/:id', psicologosController.updatePsicologo);
 routes.put('/pacientes/:id', pacientesController.updatePaciente);
+routes.post('/login', authController.authLogin);
+routes.post('/atendimentos/', auth, atendimentosController.criarAtendimento);
 
 export default routes;

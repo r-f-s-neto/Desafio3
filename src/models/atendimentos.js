@@ -30,6 +30,9 @@ const atendimentos = db.define(
       autoIncrement: true,
       allowNull: false,
     },
+    observacao: {
+      type: DataTypes.TEXT,
+    },
     createdAt: {
       type: DataTypes.DATE,
     },
