@@ -18,14 +18,4 @@ psicologos.hasMany(atendimentos, {
   foreignKey: 'psicologos_id',
 });
 
-//pacientes.belongsToMany(psicologos, {
-//foreignKey: 'pacientes_id',
-//through: atendimentos,
-//});
-
-//psicologos.belongsToMany(pacientes, {
-// foreignKey: 'psicologos_id',
-// through: atendimentos,
-//});
-
 export { pacientes, psicologos, atendimentos };

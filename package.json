@@ -23,7 +23,8 @@
     "sequelize": "^6.30.0"
   },
   "devDependencies": {
-    "cz-conventional-changelog": "^3.3.0"
+    "cz-conventional-changelog": "^3.3.0",
+    "sequelize-cli": "^6.6.0"
   },
   "config": {
     "commitizen": {
