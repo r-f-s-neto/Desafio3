@@ -32,3 +32,15 @@ npm install
 ```
 npm start
 ```
+---
+## Autores
+
+ • [Raimundo Neto](https://github.com/r-f-s-neto)
+
+ • [Abner Papassoni](https://github.com/AbnerPapassoni)
+
+ • [Darlene Moura](https://github.com/darlenedesenvolvedor)
+ 
+ • [Carina Motta](https://github.com/ijiola)
+
+
