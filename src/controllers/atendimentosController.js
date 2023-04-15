@@ -58,15 +58,20 @@ const atendimentosController = {
   criarAtendimento: async (req, res) => {
     try {
       const { paciente_id, data_atendimento, observacao } = req.body;
-      const token = req.headers.authorization.replace('Bearer ', '');
-      const psicologo_id = jwt.verify(token, key).id;
-      const newAtendimento = await atendimentos.create({
-        pacientes_id: paciente_id,
-        psicologos_id: psicologo_id,
-        data: data_atendimento,
-        observacao,
-      });
-      res.status(201).json(newAtendimento);
+      const verifyPaciente = await pacientes.findByPk(paciente_id);
+      if (verifyPaciente) {
+        const token = req.headers.authorization.replace('Bearer ', '');
+        const psicologo_id = jwt.verify(token, key).id;
+        const newAtendimento = await atendimentos.create({
+          pacientes_id: paciente_id,
+          psicologos_id: psicologo_id,
+          data: data_atendimento,
+          observacao,
+        });
+        return res.status(201).json(newAtendimento);
+      } else {
+        return res.status(400).json('id do paciente não encontrado');
+      }
     } catch (error) {
       return res
         .status(500)
