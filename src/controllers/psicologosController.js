@@ -1,5 +1,7 @@
 import { psicologos } from '../models/index.js';
 import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
+import key from '../configs/secret.js';
 
 const psicologosController = {
   listarPsicologos: async (req, res) => {
@@ -70,27 +72,36 @@ const psicologosController = {
       const { nome, email, senha, apresentacao } = req.body;
       const id = req.params.id;
       if (nome && email && senha && apresentacao) {
-        const senhaCript = bcrypt.hashSync(senha, 10);
-        const psicologoUpdated = await psicologos.update(
-          {
-            nome,
-            email,
-            senha: senhaCript,
-            apresentacao,
-          },
-          {
-            where: { id },
-          },
-        );
+        const token = req.headers.authorization.replace('Bearer ', '');
+        const psic_id = jwt.verify(token, key).id;
 
-        console.log(psicologoUpdated);
+        if (psic_id == id) {
+          const senhaCript = bcrypt.hashSync(senha, 10);
+          const psicologoUpdated = await psicologos.update(
+            {
+              nome,
+              email,
+              senha: senhaCript,
+              apresentacao,
+            },
+            {
+              where: { id },
+            },
+          );
 
-        if (psicologoUpdated[0]) {
-          return res
-            .status(200)
-            .json({ nome, email, senhaCript, apresentacao });
+          console.log(psicologoUpdated);
+
+          if (psicologoUpdated[0]) {
+            return res
+              .status(200)
+              .json({ nome, email, senhaCript, apresentacao });
+          } else {
+            return res.status(400).json('id não encontrado');
+          }
         } else {
-          return res.status(400).json('id não encontrado');
+          return res
+            .status(401)
+            .json('o psicologo só pode atualizar os proprios dados');
         }
       } else {
         return res.status(400).json('todos os dados devem ser preenchidos');

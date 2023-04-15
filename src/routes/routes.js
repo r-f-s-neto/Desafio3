@@ -11,22 +11,30 @@ import loginValid from '../middlewares/validations/loginValid.js';
 const routes = Router();
 
 routes.get('/pacientes', pacientesController.listarPacientes);
-routes.get('/pacientes/:id', pacientesController.encontrarPaciente);
+routes.get('/pacientes/:id', auth, pacientesController.encontrarPaciente);
 routes.get('/psicologos', psicologosController.listarPsicologos);
-routes.get('/psicologos/:id', psicologosController.encontrarPsicologo);
+routes.get('/psicologos/:id', auth, psicologosController.encontrarPsicologo);
 routes.get('/atendimentos', atendimentosController.listarAtendimentos);
-routes.get('/atendimentos/:id', atendimentosController.encontrarAtendimento);
-routes.delete('/pacientes/:id', pacientesController.deletarPaciente);
-routes.delete('/psicologos/:id', psicologosController.deletarPsicologo);
-routes.delete('/atendimentos/:id', atendimentosController.deletarAtendimento);
+routes.get(
+  '/atendimentos/:id',
+  auth,
+  atendimentosController.encontrarAtendimento,
+);
+routes.delete('/pacientes/:id', auth, pacientesController.deletarPaciente);
+routes.delete('/psicologos/:id', auth, psicologosController.deletarPsicologo);
+routes.delete(
+  '/atendimentos/:id',
+  auth,
+  atendimentosController.deletarAtendimento,
+);
 routes.post(
   '/psicologos',
   createPsiValid,
   psicologosController.createPsicologos,
 );
 routes.post('/pacientes', createPacValid, pacientesController.createPacientes);
-routes.put('/psicologos/:id', psicologosController.updatePsicologo);
-routes.put('/pacientes/:id', pacientesController.updatePaciente);
+routes.put('/psicologos/:id', auth, psicologosController.updatePsicologo);
+routes.put('/pacientes/:id', auth, pacientesController.updatePaciente);
 routes.post('/login', loginValid, authController.authLogin);
 routes.post('/atendimentos/', auth, atendimentosController.criarAtendimento);
 
