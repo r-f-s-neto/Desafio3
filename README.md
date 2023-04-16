@@ -43,4 +43,6 @@ npm start
  
  • [Carina Motta](https://github.com/ijiola)
 
+## Documentação
 
+ • [link para a documentação da API](https://documenter.getpostman.com/view/26928963/2s93XyTNwq)
