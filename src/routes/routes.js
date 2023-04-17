@@ -7,6 +7,7 @@ import auth from '../middlewares/auth.js';
 import createPacValid from '../middlewares/validations/createPacValid.js';
 import createPsiValid from '../middlewares/validations/createPsiValid.js';
 import loginValid from '../middlewares/validations/loginValid.js';
+import dashboardController from '../controllers/dashboardController.js';
 
 const routes = Router();
 
@@ -37,5 +38,12 @@ routes.put('/psicologos/:id', auth, psicologosController.updatePsicologo);
 routes.put('/pacientes/:id', auth, pacientesController.updatePaciente);
 routes.post('/login', loginValid, authController.authLogin);
 routes.post('/atendimentos/', auth, atendimentosController.criarAtendimento);
+routes.get(
+  '/dashboard/numero-atendimento',
+  dashboardController.numeroAtendimentos,
+);
+routes.get('/dashboard/numero-paciente', dashboardController.numeroPacientes);
+routes.get('/dashboard/numero-psicologo', dashboardController.numeroPsicologos);
+routes.get('/dashboard/media', dashboardController.media);
 
 export default routes;
