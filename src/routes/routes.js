@@ -34,8 +34,18 @@ routes.post(
   psicologosController.createPsicologos,
 );
 routes.post('/pacientes', createPacValid, pacientesController.createPacientes);
-routes.put('/psicologos/:id', auth, psicologosController.updatePsicologo);
-routes.put('/pacientes/:id', auth, pacientesController.updatePaciente);
+routes.put(
+  '/psicologos/:id',
+  auth,
+  createPsiValid,
+  psicologosController.updatePsicologo,
+);
+routes.put(
+  '/pacientes/:id',
+  auth,
+  createPacValid,
+  pacientesController.updatePaciente,
+);
 routes.post('/login', loginValid, authController.authLogin);
 routes.post('/atendimentos/', auth, atendimentosController.criarAtendimento);
 routes.get(

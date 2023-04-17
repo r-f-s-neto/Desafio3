@@ -81,40 +81,36 @@ const pacientesController = {
     try {
       const { nome, email, idade } = req.body;
       const id = req.params.id;
-      if (nome && email && idade) {
-        const idadeFormatada = idade
-          .split(/[-\/ ]/)
-          .reverse()
-          .join('-');
+      const idadeFormatada = idade
+        .split(/[-\/ ]/)
+        .reverse()
+        .join('-');
 
-        const verifyEmail = await pacientes.findOne({
-          where: { email },
-        });
+      const verifyEmail = await pacientes.findOne({
+        where: { email },
+      });
 
-        if (!verifyEmail) {
-          const pacienteUpdated = await pacientes.update(
-            {
-              nome,
-              email,
-              idade: idadeFormatada,
-            },
-            {
-              where: { id },
-            },
-          );
+      if (!verifyEmail) {
+        const pacienteUpdated = await pacientes.update(
+          {
+            nome,
+            email,
+            idade: idadeFormatada,
+          },
+          {
+            where: { id },
+          },
+        );
 
-          if (pacienteUpdated[0]) {
-            return res.status(200).json({ nome, email, idade });
-          } else {
-            return res.status(400).json('id não encontrado');
-          }
+        if (pacienteUpdated[0]) {
+          return res.status(200).json({ nome, email, idade });
         } else {
-          return res
-            .status(400)
-            .json('email já cadastrado na plataforma, insira outro email');
+          return res.status(400).json('id não encontrado');
         }
       } else {
-        return res.status(400).json('todos os dados devem ser preenchidos');
+        return res
+          .status(400)
+          .json('email já cadastrado na plataforma, insira outro email');
       }
     } catch (error) {
       return res
