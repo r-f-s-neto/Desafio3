@@ -52,12 +52,23 @@ const pacientesController = {
         .split(/[-\/ ]/)
         .reverse()
         .join('-');
-      const dados = await pacientes.create({
-        nome,
-        email,
-        idade: idadeFormatada,
+
+      const verifyEmail = await pacientes.findOne({
+        where: { email },
       });
-      return res.status(201).json(dados);
+
+      if (!verifyEmail) {
+        const dados = await pacientes.create({
+          nome,
+          email,
+          idade: idadeFormatada,
+        });
+        return res.status(201).json(dados);
+      } else {
+        return res
+          .status(400)
+          .json('email já cadastrado na plataforma, insira outro email');
+      }
     } catch (error) {
       return res
         .status(500)
