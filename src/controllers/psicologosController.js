@@ -52,13 +52,23 @@ const psicologosController = {
     try {
       const { nome, email, senha, apresentacao } = req.body;
       const senhaCript = bcrypt.hashSync(senha, 10);
-      const dados = await psicologos.create({
-        nome,
-        email,
-        senha: senhaCript,
-        apresentacao,
+
+      const verifyEmail = await psicologos.findOne({
+        where: { email },
       });
-      return res.status(201).json(dados);
+      if (!verifyEmail) {
+        const dados = await psicologos.create({
+          nome,
+          email,
+          senha: senhaCript,
+          apresentacao,
+        });
+        return res.status(201).json(dados);
+      } else {
+        return res
+          .status(400)
+          .json('email já cadastrado na plataforma, insira outro email');
+      }
     } catch (error) {
       return res
         .status(500)
@@ -76,27 +86,34 @@ const psicologosController = {
         const psic_id = jwt.verify(token, key).id;
 
         if (psic_id == id) {
-          const senhaCript = bcrypt.hashSync(senha, 10);
-          const psicologoUpdated = await psicologos.update(
-            {
-              nome,
-              email,
-              senha: senhaCript,
-              apresentacao,
-            },
-            {
-              where: { id },
-            },
-          );
+          const verifyEmail = await psicologos.findOne({
+            where: { email },
+          });
+          if (!verifyEmail) {
+            const senhaCript = bcrypt.hashSync(senha, 10);
+            const psicologoUpdated = await psicologos.update(
+              {
+                nome,
+                email,
+                senha: senhaCript,
+                apresentacao,
+              },
+              {
+                where: { id },
+              },
+            );
 
-          console.log(psicologoUpdated);
-
-          if (psicologoUpdated[0]) {
-            return res
-              .status(200)
-              .json({ nome, email, senhaCript, apresentacao });
+            if (psicologoUpdated[0]) {
+              return res
+                .status(200)
+                .json({ nome, email, senhaCript, apresentacao });
+            } else {
+              return res.status(400).json('id não encontrado');
+            }
           } else {
-            return res.status(400).json('id não encontrado');
+            return res
+              .status(400)
+              .json('email já cadastrado na plataforma, insira outro email');
           }
         } else {
           return res
