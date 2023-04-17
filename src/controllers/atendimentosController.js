@@ -62,13 +62,30 @@ const atendimentosController = {
       if (verifyPaciente) {
         const token = req.headers.authorization.replace('Bearer ', '');
         const psicologo_id = jwt.verify(token, key).id;
-        const newAtendimento = await atendimentos.create({
-          pacientes_id: paciente_id,
-          psicologos_id: psicologo_id,
-          data: data_atendimento,
-          observacao,
+
+        const arrayAtendimentos = await atendimentos.findAll({
+          where: { pacientes_id: paciente_id },
         });
-        return res.status(201).json(newAtendimento);
+        const timeStamp = Date.parse(data_atendimento);
+        const date = new Date(timeStamp);
+        //console.log(arrayAtendimentos);
+        const arrayAtendimentosFiltered = arrayAtendimentos.filter((e) => {
+          return e.dataValues.data.getTime() === date.getTime();
+        });
+
+        if (!arrayAtendimentosFiltered.length) {
+          const newAtendimento = await atendimentos.create({
+            pacientes_id: paciente_id,
+            psicologos_id: psicologo_id,
+            data: data_atendimento,
+            observacao,
+          });
+          return res.status(201).json(newAtendimento);
+        } else {
+          return res
+            .status(400)
+            .json('este paciente já possui agendamento para esta data e hora');
+        }
       } else {
         return res.status(400).json('id do paciente não encontrado');
       }
