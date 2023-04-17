@@ -22,6 +22,19 @@ const dashboardController = {
     const med = numAppoint / numPsi;
     return res.status(200).json(med);
   },
+  mediaPerPsicologo: async (req, res) => {
+    const id = req.params.id;
+    const verifyPsi = await psicologos.findByPk(id);
+    if (verifyPsi) {
+      const appoint = await atendimentos.findAll({
+        where: { psicologos_id: id },
+      });
+      const numAppoint = appoint.length;
+      return res.status(200).json(numAppoint);
+    } else {
+      return res.status(400).json('id do psicologo incorreto');
+    }
+  },
 };
 
 export default dashboardController;

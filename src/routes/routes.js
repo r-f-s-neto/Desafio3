@@ -45,5 +45,6 @@ routes.get(
 routes.get('/dashboard/numero-paciente', dashboardController.numeroPacientes);
 routes.get('/dashboard/numero-psicologo', dashboardController.numeroPsicologos);
 routes.get('/dashboard/media', dashboardController.media);
+routes.get('/dashboard/media/:id', dashboardController.mediaPerPsicologo);
 
 export default routes;
