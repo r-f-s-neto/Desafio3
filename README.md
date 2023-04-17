@@ -46,3 +46,8 @@ npm start
 ## Documentação
 
  • [link para a documentação da API](https://documenter.getpostman.com/view/26928963/2s93XyTNwq)
+ 
+## Banco de Dados
+ 
+ [link para o script do banco de dados](https://github.com/r-f-s-neto/Desafio3/blob/main/Banco%20de%20Dados/script%20para%20gera%C3%A7%C3%A3o%20do%20banco%20de%20dados.txt)
+ 
