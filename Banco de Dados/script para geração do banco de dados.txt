@@ -1,0 +1,90 @@
+-- MySQL Workbench Forward Engineering
+
+SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
+SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
+
+-- -----------------------------------------------------
+-- Schema mydb
+-- -----------------------------------------------------
+-- -----------------------------------------------------
+-- Schema clinicalavieteste2
+-- -----------------------------------------------------
+
+-- -----------------------------------------------------
+-- Schema clinicalavieteste2
+-- -----------------------------------------------------
+CREATE SCHEMA IF NOT EXISTS `clinicalavieteste2` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci ;
+USE `clinicalavieteste2` ;
+
+-- -----------------------------------------------------
+-- Table `clinicalavieteste2`.`pacientes`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `clinicalavieteste2`.`pacientes` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `nome` VARCHAR(100) NOT NULL,
+  `email` VARCHAR(45) NOT NULL,
+  `idade` DATE NOT NULL,
+  `createdAt` DATETIME NULL DEFAULT NULL,
+  `updatedAt` DATETIME NULL DEFAULT NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
+-- Table `clinicalavieteste2`.`psicologos`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `clinicalavieteste2`.`psicologos` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `nome` VARCHAR(100) NOT NULL,
+  `email` VARCHAR(45) NOT NULL,
+  `senha` VARCHAR(100) NOT NULL,
+  `apresentacao` VARCHAR(45) NOT NULL,
+  `createdAt` DATETIME NULL DEFAULT NULL,
+  `updatedAt` DATETIME NULL DEFAULT NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
+-- Table `clinicalavieteste2`.`atendimentos`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `clinicalavieteste2`.`atendimentos` (
+  `pacientes_id` INT NULL DEFAULT NULL,
+  `psicologos_id` INT NULL DEFAULT NULL,
+  `data` DATETIME NOT NULL,
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `observacao` TEXT NULL DEFAULT NULL,
+  `createdAt` DATETIME NULL DEFAULT NULL,
+  `updatedAt` DATETIME NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `pacientes_id` (`pacientes_id` ASC) VISIBLE,
+  INDEX `psicologos_id` (`psicologos_id` ASC) VISIBLE,
+  CONSTRAINT `atendimentos_ibfk_1`
+    FOREIGN KEY (`pacientes_id`)
+    REFERENCES `clinicalavieteste2`.`pacientes` (`id`),
+  CONSTRAINT `atendimentos_ibfk_2`
+    FOREIGN KEY (`psicologos_id`)
+    REFERENCES `clinicalavieteste2`.`psicologos` (`id`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
+-- Table `clinicalavieteste2`.`sequelizemeta`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `clinicalavieteste2`.`sequelizemeta` (
+  `name` VARCHAR(255) COLLATE 'utf8mb3_unicode_ci' NOT NULL,
+  PRIMARY KEY (`name`),
+  UNIQUE INDEX `name` (`name` ASC) VISIBLE)
+ENGINE = InnoDB;
+
+
+SET SQL_MODE=@OLD_SQL_MODE;
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
