@@ -89,8 +89,10 @@ const pacientesController = {
       const verifyEmail = await pacientes.findOne({
         where: { email },
       });
+      console.log('passou aqui ', verifyEmail);
+      const pastPass = verifyEmail && verifyEmail.id == id;
 
-      if (!verifyEmail) {
+      if (!verifyEmail || pastPass) {
         const pacienteUpdated = await pacientes.update(
           {
             nome,
