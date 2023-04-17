@@ -88,7 +88,10 @@ const psicologosController = {
         const verifyEmail = await psicologos.findOne({
           where: { email },
         });
-        if (!verifyEmail) {
+
+        const pastPass = verifyEmail && verifyEmail.id == id;
+
+        if (!verifyEmail || pastPass) {
           const senhaCript = bcrypt.hashSync(senha, 10);
           const psicologoUpdated = await psicologos.update(
             {
